@@ -22,35 +22,31 @@ reqAuth = {
 def hello_world():
     return 'Hello, World!'
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET'])
 def login():
-    if request.method == 'POST':
-        username = os.getenv('USERNAME')
-        password = os.getenv('PASSWORD')
+    username = os.getenv('USERNAME')
+    password = os.getenv('PASSWORD')
 
-        body = json.dumps({
-            "username": username,
-            "password": password,
-            "grant_type": "password",
-            "scope": "CSKH",
-            "ThongTinCaptcha": {
-                "captcha": "undefined",
-                "token": "undefined"
-            }
-        })
-        headers = {
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Content-Type": "application/json;charset=UTF-8",
-            "Access-Control-Allow-Origin": "*",
-            "Connection": "keep-alive"
+    body = json.dumps({
+        "username": username,
+        "password": password,
+        "grant_type": "password",
+        "scope": "CSKH",
+        "ThongTinCaptcha": {
+            "captcha": "undefined",
+            "token": "undefined"
         }
+    })
+    headers = {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+        "Connection": "keep-alive"
+    }
 
-        # Make the HTTP request
-        response = requests.post(reqAuth['login'], headers=headers, data=body)
+    # Make the HTTP request
+    response = requests.post(reqAuth['login'], headers=headers, data=body)
 
-        # Return the response from the external service
-        return jsonify(response.json()), response.status_code
-    elif request.method == 'GET':
-        # Define logic for GET request or simply return a message
-        return 'GET request to /login is not supported', 405
+    # Return the response from the external service
+    return jsonify(response.json()), response.status_code
