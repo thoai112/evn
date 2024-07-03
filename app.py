@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import requests
 import json
+import os
 
 app = Flask(__name__)
 
@@ -25,11 +26,12 @@ def hello_world():
 def login():
     # Extract username and password from the request
     #data = request.json
-
+    username = os.getenv('USERNAME')
+    password = os.getenv('PASSWORD')
 
     body = json.dumps({
-        "username": "PC08CC0332738",
-        "password": "Kurata1909!",
+        "username": username,
+        "password": password,
         "grant_type": "password",
         "scope": "CSKH",
         "ThongTinCaptcha": {
@@ -38,7 +40,7 @@ def login():
         }
     })
     headers = {
-        "User-Agent": "Mozilla/5.0",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36",
         "Accept-Encoding": "gzip, deflate, br",
         "Content-Type": "application/json;charset=UTF-8",
         "Access-Control-Allow-Origin": "*",
