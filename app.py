@@ -44,9 +44,13 @@ def login():
         "Access-Control-Allow-Origin": "*",
         "Connection": "keep-alive"
     }
+    
+    proxies = {
+            "http": "http://123.30.154.171:7777"
+        }
 
-    # Make the HTTP request
-    response = requests.post(reqAuth['login'], headers=headers, data=body)
+    # Make the HTTP request with proxy
+    response = requests.post(reqAuth['login'], headers=headers, data=body, proxies=proxies)
 
     # Return the response from the external service
     return jsonify(response.json()), response.status_code
